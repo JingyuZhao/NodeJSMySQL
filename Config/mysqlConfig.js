@@ -2,7 +2,7 @@ var mysql = require("mysql");
 var pool = mysql.createPool({
    host:"localhost",
    user:"root",
-   password:"123456yu",
+   password:"自己的root账户密码",
     database:"NodeJSDataBase"
 });
 
