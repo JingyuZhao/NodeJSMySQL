@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>增加新闻</title>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="../style/app.css" type="text/css" />
+    <style>
+        #contentid{
+            margin: 0px 20px;
+        }
+        #headerView{
+            width: 100%;
+            height: 80px;
+            text-align: center;
+            vertical-align: center;
+
+        }
+        #bottomView{
+            margin-top: 20px;
+        }
+        #submitView{
+            text-align: center;
+            vertical-align: center;
+            margin-top: 30px;
+        }
+        #submitView button{
+            width: 200px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
-<label>这是前端页面</label>
+<div id="contentid">
+    <div id="headerView">
+         <h1>请录入新闻的相关信息</h1>
+    </div>
+    <div id="bottomView">
+        <div class="inputView">
+            <label class="inputViewLabel">新闻标题</label>
+            <input type="text" id="title">
+            <br>
+        </div>
+        <div class="inputView">
+            <label class="inputViewLabel">新闻内容</label>
+            <input type="text" id="content_text">
+            <br>
+        </div>
+        <div class="inputView">
+            <label class="inputViewLabel">新闻类别</label>
+            <input type="text" id="classId">
+            <br>
+        </div>
+        <div class="inputView">
+            <label class="inputViewLabel">上传图片</label>
+            <input type="text">
+            <br>
+        </div>
+        <div class="inputView">
+            <label class="inputViewLabel">上传视频</label>
+            <input type="text">
+            <br>
+        </div>
+    </div>
+    <div id="submitView">
+        <button type="button" onclick="submit()">提交</button>
+    </div>
+</div>
 </body>
+<script type="application/javascript">
+    function submit() {
+        var title = document.getElementById("title").value;
+        var content_text = document.getElementById("content_text").value;
+        var classId = document.getElementById("classId").value;
+        var paramter={'title':title,'content_text':content_text,'classId':classId};
+        $.ajax({
+            type:'POST',
+            url:'http://localhost:3000/news/addNews',
+            data:paramter,
+            dataType:'json',
+            success:function (data) {
+                console.log(data);
+                alert(data["name"]);
+            },
+            error:function (err) {
+            }
+        })
+    }
+</script>
 </html>
