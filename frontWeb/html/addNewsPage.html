@@ -53,34 +53,59 @@
         </div>
         <div class="inputView">
             <label class="inputViewLabel">上传图片</label>
-            <input type="text">
+            <input id="imageUrl" type="text">
             <br>
         </div>
         <div class="inputView">
             <label class="inputViewLabel">上传视频</label>
-            <input type="text">
+            <input id="videoUrl" type="text">
             <br>
         </div>
     </div>
     <div id="submitView">
         <button type="button" onclick="submit()">提交</button>
+        <button type="button" onclick="check()">查询信息</button>
+    </div>
+    <div id="checkView">
+
     </div>
 </div>
 </body>
 <script type="application/javascript">
+
+    function check() {
+        $.ajax({
+           type:'POST',
+            url:'http://localhost:3000/news/getNews',
+            data:{},
+            dataType:"json",
+            success:function (data) {
+                var content = document.getElementById("checkView");
+                var str = JSON.stringify(data);
+                console.log(str);
+                content.innerText = str;
+            },
+            error:function (err) {
+               alert(err);
+            }
+        });
+    }
+
     function submit() {
         var title = document.getElementById("title").value;
         var content_text = document.getElementById("content_text").value;
         var classId = document.getElementById("classId").value;
-        var paramter={'title':title,'content_text':content_text,'classId':classId};
+        var content_image_url = document.getElementById("imageUrl").value;
+        var content_video_url = document.getElementById("videoUrl").value;
+        var paramter={'title':title,'content_text':content_text,'classId':classId,"content_image_url":content_image_url,
+            "content_video_url":content_video_url};
         $.ajax({
             type:'POST',
             url:'http://localhost:3000/news/addNews',
             data:paramter,
             dataType:'json',
             success:function (data) {
-                console.log(data);
-                alert(data["name"]);
+                alert(data["msg"]);
             },
             error:function (err) {
             }
